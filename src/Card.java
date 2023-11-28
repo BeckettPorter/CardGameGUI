@@ -1,9 +1,10 @@
 public class Card {
     private String suit;
-    private int rank;
+    private int value;
 
-    public Card()
+    public Card(String suit, int value)
     {
-        suit = "Diamonds";
+        this.suit = suit;
+        this.value = value;
     }
 }
