@@ -7,6 +7,9 @@ public class Game {
 
     public void playgame()
     {
+        Deck deck = new Deck(52);
+        Player player = new Player();
 
+        deck.drawDeck();
     }
 }
