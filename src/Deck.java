@@ -1,20 +1,53 @@
 import java.util.ArrayList;
 public class Deck {
-    int size;
-    Arraylist<Card> cardDeck;
+    int cardsLeft;
+    ArrayList<Card> cards;
 
-    public Deck (int size)
+    public Deck (String[] ranks, String[] suits, int[] values)
     {
-        this.size = size;
-        cardDeck = new Arraylist<Card>();
+        cards = new ArrayList<Card>();
+        for (int i = 0; i < ranks.length; i++)
+        {
+            cards.add(new Card(ranks[i], suits[i], values[i]));
+        }
+        cardsLeft = cards.size() - 1;
     }
 
-    public void drawDeck()
+    public boolean isEmpty()
     {
-        for (int i = 0; i < size; i++)
+        return cardsLeft == 0;
+    }
+
+    public int getCardsLeft()
+    {
+        return cardsLeft;
+    }
+
+    public Card deal()
+    {
+        if (isEmpty())
         {
-            cardDeck.add(new Card());
+            return null;
         }
+
+        cardsLeft--;
+        return cards.get(cardsLeft + 1);
+    }
+
+    public void shuffle()
+    {
+        for (int i = cards.size() - 1; i <= 0; i--)
+        {
+            int randomIndex = (int) (Math.random() * (i));
+
+            Card tempCard = cards.get(i);
+            cards.set(i, cards.get(randomIndex));
+            cards.set(randomIndex, tempCard);
+        }
+
+
+
+        cardsLeft = cards.size() - 1;
     }
 
 }

@@ -7,7 +7,7 @@ public class Game {
 
     public void playgame()
     {
-        Deck deck = new Deck(52);
+        Deck deck = new Deck();
         Player player = new Player();
 
         deck.drawDeck();
