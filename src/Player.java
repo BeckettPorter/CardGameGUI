@@ -42,7 +42,7 @@ public class Player {
 
     @Override
     public String toString() {
-        return name + " has " + points + " points\n";
+        return name + " has " + points + " points\n"
         + name + "'s cards: " + hand.toString();
     }
 }
