@@ -30,6 +30,11 @@ public class Player {
         return points;
     }
 
+    public String getName()
+    {
+        return name;
+    }
+
     public void addPoints(int pointsToAdd)
     {
         points += pointsToAdd;
@@ -38,6 +43,23 @@ public class Player {
     public void addCard(Card cardToAdd)
     {
         hand.add(cardToAdd);
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public Card getSecondCard()
+    {
+        if (hand.size() >= 2)
+        {
+            return hand.get(1);
+        }
+        else
+        {
+            return null;
+        }
     }
 
     @Override

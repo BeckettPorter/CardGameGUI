@@ -6,10 +6,14 @@ public class Deck {
     public Deck (String[] ranks, String[] suits, int[] values)
     {
         cards = new ArrayList<Card>();
-        for (int i = 0; i < ranks.length; i++)
+        for (int i = 0; i < suits.length - 1; i++)
         {
-            cards.add(new Card(ranks[i], suits[i], values[i]));
+            for (int j = 0; j < ranks.length; j++)
+            {
+                cards.add(new Card(ranks[j], suits[i], values[j]));
+            }
         }
+
         cardsLeft = cards.size() - 1;
     }
 
@@ -36,7 +40,7 @@ public class Deck {
 
     public void shuffle()
     {
-        for (int i = cards.size() - 1; i <= 0; i--)
+        for (int i = cards.size() - 1; i > 0; i--)
         {
             int randomIndex = (int) (Math.random() * (i));
 
@@ -45,9 +49,16 @@ public class Deck {
             cards.set(randomIndex, tempCard);
         }
 
-
-
         cardsLeft = cards.size() - 1;
     }
+
+    //for testing
+//    public void printDeck()
+//    {
+//        for (Card card: cards)
+//        {
+//            System.out.println(card);
+//        }
+//    }
 
 }
