@@ -45,6 +45,7 @@ public class Game {
         if (printInstructions == true)
         {
             printInstructions();
+            delay(500);
         }
 
         System.out.println("\n---NEW GAME---");
@@ -88,6 +89,8 @@ public class Game {
             System.out.println("\nDo you want to hit or stand?");
             hitOrStand = input.nextLine();
         }
+
+        delay(250);
 
         if (hitOrStand.equals("hit"))
         {
@@ -142,6 +145,18 @@ public class Game {
         }
     }
 
+    // Delay method to pause the game for a certain number of ms for effect (I found this online btw)
+    public static void delay(int delayTime)
+    {
+        try
+        {
+            Thread.sleep(delayTime);
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+    }
 
     // Main method that makes a new Game.java object and calls the playGame() method on it
     public static void main(String[] args)
