@@ -6,17 +6,19 @@ public class Game {
     Player player;
     Player dealer;
     Deck deck;
+
     Scanner input = new Scanner(System.in);
 
     //Game constructor, initializes the players with temporary names before I prompt them for names and makes the deck
     public Game()
     {
-        player = new Player("player", new ArrayList<Card>());
-        dealer = new Player("dealer", new ArrayList<Card>());
+        player = new Player("Player", new ArrayList<Card>());
+        dealer = new Player("Dealer", new ArrayList<Card>());
 
         deck = new Deck(new String[]{"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"},
                 new String[]{"Hearts", "Clubs", "Diamonds", "Spades"},
                 new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10});
+
     }
 
     // Print instructions, just prints the instructions of blackjack in a big print statement
@@ -32,40 +34,53 @@ public class Game {
                 "5. If you go over 21 you bust, and the dealer wins regardless of the dealer's hand.\n" +
                 "6. The dealer will hit until their cards total 17 or higher.\n" +
                 "7. Dealer will not stop until they have at least 17, even if all players bust.\n" +
-                "8. If you and the dealer have the same total, it's a 'Push' and you get your bet back.\n");
+                "8. If you and the dealer have the same total, it's a 'Push' and you get your bet back.\n\n");
     }
 
 
     // Main playGame method where most game logic will be
-    public void playGame()
+    public void playGame(boolean printInstructions)
     {
         deck.shuffle();
-        printInstructions();
-
-        player.addCard(deck.deal());
-        player.addCard(deck.deal());
-        dealer.addCard(deck.deal());
-        dealer.addCard(deck.deal());
-
-        System.out.println("Your hand: " + player.toString());
-        System.out.println("Dealer's hand: [hidden], " + dealer.getSecondCard());
-
-        // Player's turn
-        while (player.getPoints() <= 21)
+        if (printInstructions == true)
         {
-            playerTurn();
+            printInstructions();
         }
 
+        System.out.println("\n---NEW GAME---");
+
+        player.addCard(deck.deal(player));
+        player.addCard(deck.deal(player));
+        dealer.addCard(deck.deal(dealer));
+        dealer.addCard(deck.deal(dealer));
+
+
+        System.out.println("\nDealer's hand: [hidden], " + dealer.getSecondCard());
+        System.out.println("Dealer has " + dealer.getSecondCard().getPoint() + " visible points");
+        System.out.println();
+
+        playTurn();
 
 
 
     }
 
-    public void playerTurn()
+    public void playTurn()
     {
         System.out.println("Here is your current hand: " + player);
 
-
+        if (player.getPoints() > 21)
+        {
+            System.out.println("PLAYER LOST");
+            restartGame();
+            return;
+        }
+        if (player.getPoints() == 21)
+        {
+            System.out.println("Blackjack!");
+            restartGame();
+            return;
+        }
 
         String hitOrStand = "";
         while (!(hitOrStand.equals("hit") || hitOrStand.equals("stand")))
@@ -76,30 +91,62 @@ public class Game {
 
         if (hitOrStand.equals("hit"))
         {
-
+            player.addCard(deck.deal(player));
+            playTurn();
         }
         else if(hitOrStand.equals("stand"))
         {
+            while(dealer.getPoints() < 21 && dealer.getPoints() < player.getPoints())
+            {
+                System.out.println("Dealer gained " + dealer.addCard(deck.deal(dealer)).getPoint() +
+                        " points for a total of " + dealer.getPoints() + " points");
 
+            }
+            if (dealer.getPoints() > 21)
+            {
+                System.out.println("Dealer Lost with " + dealer.getPoints() + " points");
+                restartGame();
+            }
+            else if (dealer.getPoints() > player.getPoints())
+            {
+                System.out.println("Dealer Wins with " + dealer.getPoints() + " points");
+                restartGame();
+            }
+            else if (dealer.getPoints() == player.getPoints())
+            {
+                System.out.println("Draw at " + dealer.getPoints() + " points");
+                restartGame();
+            }
         }
-
-        dealerTurn();
     }
 
-    public void dealerTurn()
+
+    public void restartGame()
     {
+        String playAgainInput = "";
+        while (!(playAgainInput.equals("yes") || playAgainInput.equals("no")))
+        {
+            System.out.println("\nWould you like to play again?");
+            playAgainInput = input.nextLine();
 
+            if (playAgainInput.equals("yes"))
+            {
+                Game game = new Game();
+                game.playGame(false);
+                return;
+            }
+            else if (playAgainInput.equals("no"))
+            {
+                return;
+            }
+        }
     }
-
-
-
-
 
 
     // Main method that makes a new Game.java object and calls the playGame() method on it
     public static void main(String[] args)
     {
         Game game = new Game();
-        game.playGame();
+        game.playGame(true);
     }
 }

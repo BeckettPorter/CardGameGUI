@@ -40,9 +40,15 @@ public class Player {
         points += pointsToAdd;
     }
 
-    public void addCard(Card cardToAdd)
+    public void setPoints(int newPoints)
+    {
+        this.points = newPoints;
+    }
+
+    public Card addCard(Card cardToAdd)
     {
         hand.add(cardToAdd);
+        return cardToAdd;
     }
 
     public void setName(String name)
@@ -64,7 +70,7 @@ public class Player {
 
     @Override
     public String toString() {
-        return name + " has " + points + " points\n"
-        + name + "'s cards: " + hand.toString();
+        return name + "'s cards: " + hand.toString() + "\n" +
+                name + " has " + points + " points";
     }
 }

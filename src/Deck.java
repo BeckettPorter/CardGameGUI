@@ -27,7 +27,7 @@ public class Deck {
         return cardsLeft;
     }
 
-    public Card deal()
+    public Card deal(Player playerToAddPoints)
     {
         if (isEmpty())
         {
@@ -35,6 +35,22 @@ public class Deck {
         }
 
         cardsLeft--;
+        if (cards.get(cardsLeft + 1).getRank().equals("Ace"))
+        {
+            if (playerToAddPoints.getPoints() + 11 > 21)
+            {
+                playerToAddPoints.addPoints(1);
+            }
+            else
+            {
+                playerToAddPoints.addPoints(11);
+            }
+        }
+        else
+        {
+            playerToAddPoints.addPoints(cards.get(cardsLeft + 1).getPoint());
+        }
+
         return cards.get(cardsLeft + 1);
     }
 
@@ -51,14 +67,5 @@ public class Deck {
 
         cardsLeft = cards.size() - 1;
     }
-
-    //for testing
-//    public void printDeck()
-//    {
-//        for (Card card: cards)
-//        {
-//            System.out.println(card);
-//        }
-//    }
 
 }
