@@ -2,17 +2,22 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Player {
+
+    // Instance variables for the player's hand, points, and name
     ArrayList<Card> hand;
     int points = 0;
     String name;
 
-
+    // The first constructor for player, just takes in a name and also sets points to 0. I didn't use this, but it said I
+    // should have it in the instructions, so I kept it in.
     public Player (String name)
     {
         points = 0;
         this.name = name;
     }
 
+    // Here is the second constructor for player that takes in a name and also a hand arrayList of cards. It also
+    // sets points to 0.
     public Player (String name, ArrayList<Card> hand)
     {
         points = 0;
@@ -20,6 +25,7 @@ public class Player {
         this.name = name;
     }
 
+    // Getter and setter methods for player class.
     public ArrayList<Card> getHand()
     {
         return hand;
@@ -45,17 +51,22 @@ public class Player {
         this.points = newPoints;
     }
 
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+
+    // addCard method, I modified it a bit to also return the card it added because it made some of my code in
+    // Game.java more clean (line 105).
     public Card addCard(Card cardToAdd)
     {
         hand.add(cardToAdd);
         return cardToAdd;
     }
 
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
+    // getSecondCard method, this is a method that just returns the second card in the hand, it's used for
+    // initially showing the dealer's second card but not their first at the start of the game.
     public Card getSecondCard()
     {
         if (hand.size() >= 2)
@@ -64,10 +75,12 @@ public class Player {
         }
         else
         {
+            // Returns null if the hand doesn't have 2 cards
             return null;
         }
     }
 
+    // toString method that prints the necessary information about the player and their hand.
     @Override
     public String toString() {
         return name + "'s cards: " + hand.toString() + "\n" +
