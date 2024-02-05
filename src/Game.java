@@ -4,10 +4,10 @@ import java.util.Scanner;
 public class Game {
 
     //Instance variables for the player, dealer, deck, and scanner for input.
-    Player player;
-    Player dealer;
-    Deck deck;
-    Scanner input = new Scanner(System.in);
+    private Player player;
+    private Player dealer;
+    private Deck deck;
+    private Scanner input = new Scanner(System.in);
 
     // Game constructor, initializes the players with their names and hands, also creates the main deck.
     public Game()

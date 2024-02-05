@@ -4,9 +4,9 @@ import java.util.ArrayList;
 public class Player {
 
     // Instance variables for the player's hand, points, and name
-    ArrayList<Card> hand;
-    int points = 0;
-    String name;
+    private ArrayList<Card> hand;
+    private int points = 0;
+    private String name;
 
     // The first constructor for player, just takes in a name and also sets points to 0. I didn't use this, but it said I
     // should have it in the instructions, so I kept it in.

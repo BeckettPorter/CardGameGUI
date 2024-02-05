@@ -2,8 +2,8 @@ import java.util.ArrayList;
 public class Deck {
 
     // Instance variables cardsLeft and the arrayList of the cards in the deck.
-    int cardsLeft;
-    ArrayList<Card> cards;
+    private int cardsLeft;
+    private ArrayList<Card> cards;
 
     // Constructor for the Deck.java class, it takes in the necessary values for the deck (ranks, suits, and values)
     // and then creates the deck using a nested for loop.
