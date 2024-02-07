@@ -5,9 +5,12 @@ public class Game {
 
     //Instance variables for the player, dealer, deck, and scanner for input.
     private Player player;
+
     private Player dealer;
     private Deck deck;
     private Scanner input = new Scanner(System.in);
+
+    private GameView window;
 
     // Game constructor, initializes the players with their names and hands, also creates the main deck.
     public Game()
@@ -19,6 +22,7 @@ public class Game {
                 new String[]{"Hearts", "Clubs", "Diamonds", "Spades"},
                 new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10});
 
+        window = new GameView(this);
     }
 
     // Print instructions method, just prints the instructions of blackjack in a big print statement.
@@ -43,7 +47,7 @@ public class Game {
     {
         // Shuffles the deck, and then prints the instructions if PrintInstructions is true (meaning it's the first game).
         deck.shuffle();
-        if (printInstructions == true)
+        if (printInstructions)
         {
             printInstructions();
             delay(500);
@@ -71,6 +75,7 @@ public class Game {
     {
         // Call to checkWinner to make sure that the player's points aren't over 21.
         checkWinner(false);
+        window.repaint();
 
         // Show the player's hand so they can see points and cards.
         System.out.println("Here is your current hand: " + player);
@@ -193,6 +198,17 @@ public class Game {
             restartGame();
         }
     }
+
+
+    public Player getDealer() {
+        return dealer;
+    }
+
+
+    public Player getPlayer() {
+        return player;
+    }
+
 
     // Main method that makes a new Game.java object and calls the playGame() method on it.
     public static void main(String[] args)
