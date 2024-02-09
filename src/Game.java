@@ -1,4 +1,3 @@
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 public class Game {
@@ -19,11 +18,29 @@ public class Game {
         dealer = new Player("Dealer", new ArrayList<Card>());
 
         deck = new Deck(new String[]{"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"},
-                new String[]{"Hearts", "Clubs", "Diamonds", "Spades"},
+                new String[]{"Spades", "Hearts", "Diamonds", "Clubs"},
                 new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10});
 
         window = new GameView(this);
     }
+
+    // Constructor where I pass in the window so it doesn't make a new window whenever I restart the game
+    public Game(GameView window)
+    {
+        player = new Player("Player", new ArrayList<Card>());
+        dealer = new Player("Dealer", new ArrayList<Card>());
+
+        deck = new Deck(new String[]{"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"},
+                new String[]{"Hearts", "Clubs", "Diamonds", "Spades"},
+                new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10});
+
+        // Hacky workaround to get the window and game to have correct references to each other once new game
+        // object is created.
+        this.window = window;
+        this.window.setTextToDisplay("");
+        this.window.setGame(this);
+    }
+
 
     // Print instructions method, just prints the instructions of blackjack in a big print statement.
     public void printInstructions()
@@ -87,6 +104,7 @@ public class Game {
         while (!(hitOrStand.equals("hit") || hitOrStand.equals("stand")))
         {
             System.out.println("\nDo you want to hit or stand?");
+            window.setTextToDisplay("Do you want to hit or stand?");
             hitOrStand = input.nextLine();
         }
 
@@ -109,6 +127,8 @@ public class Game {
             {
                 System.out.println("Dealer gained " + dealer.addCard(deck.deal(dealer)).getPoint() +
                         " points for a total of " + dealer.getPoints() + " points");
+                window.setTextToDisplay("Dealer gained " + dealer.addCard(deck.deal(dealer)).getPoint() +
+                        " points for a total of " + dealer.getPoints() + " points");
 
             }
             // Once the while loop is done, it determines the winner and comparePointValues is true because I want to
@@ -127,13 +147,16 @@ public class Game {
         // While the playAgainInput isn't yes or no, re-prompt the user to answer either yes or no.
         while (!(playAgainInput.equals("yes") || playAgainInput.equals("no")))
         {
+            // Delay so player can see how they either won or lost
+            delay(1500);
             System.out.println("\nWould you like to play again?");
+            window.setTextToDisplay("Would you like to play again?");
             playAgainInput = input.nextLine();
 
             // If playAgainInput is yes, make a new game object, call playGame on it, and then return from this method.
             if (playAgainInput.equals("yes"))
             {
-                Game game = new Game();
+                Game game = new Game(window);
                 game.playGame(false);
                 return;
             }
@@ -173,12 +196,15 @@ public class Game {
         {
             System.out.println("You lost with " + player.getPoints() + " points! The dealer had " +
                     dealer.getPoints() + " points.");
+            window.setTextToDisplay("You lost with " + player.getPoints() + " points! The dealer had " +
+                    dealer.getPoints() + " points.");
             restartGame();
         }
         // If the player didn't lose, checks if they have 21 and then gives them a blackjack and calls restartGame.
         else if (player.getPoints() == 21)
         {
             System.out.println("BlackJack with " + player.getPoints() + " points!");
+            window.setTextToDisplay("BlackJack with " + player.getPoints() + " points!");
             restartGame();
         }
         // Here is the check for if the player won, it checks if the comparePointValues is true, and if so, it will
@@ -188,6 +214,8 @@ public class Game {
         {
             System.out.println("You won with " + player.getPoints() + " points! The dealer had " +
                     dealer.getPoints() + " points.");
+            window.setTextToDisplay("You won with " + player.getPoints() + " points! The dealer had " +
+                    dealer.getPoints() + " points.");
             restartGame();
         }
         // If comparePointValues is true and the player and dealer have the same point values, it shows that
@@ -195,6 +223,7 @@ public class Game {
         else if (comparePointValues && player.getPoints() == dealer.getPoints())
         {
             System.out.println("Tie with " + player.getPoints() + " points!");
+            window.setTextToDisplay("Tie with " + player.getPoints() + " points!");
             restartGame();
         }
     }

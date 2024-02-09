@@ -1,3 +1,5 @@
+import java.awt.*;
+
 public class Card {
 
     // Instance variables rank, suit, and point for the Card class
@@ -5,12 +7,16 @@ public class Card {
     private String suit;
     private int point;
 
+
+    private Image cardPicture;
+
     // Card constructor that takes in the rank, suit, and point values.
-    public Card(String rank, String suit, int point)
+    public Card(String rank, String suit, int point, Image cardPicture)
     {
         this.suit = suit;
         this.rank = rank;
         this.point = point;
+        this.cardPicture = cardPicture;
     }
 
     // Getter and setter methods for instance variables.
@@ -27,6 +33,10 @@ public class Card {
     public int getPoint()
     {
         return point;
+    }
+
+    public Image getCardPicture() {
+        return cardPicture;
     }
 
     public void setRank(String rank)

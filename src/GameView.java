@@ -14,7 +14,14 @@ public class GameView extends JFrame {
     public static final int PLAYER_POINTS_Y_OFFSET = 398;
 
 
+    public static final int PLAYER_CARDS_X_OFFSET = 250;
+    public static final int PLAYER_CARDS_Y_OFFSET = 398;
+    public static final int CARD_WIDTH = 90;
+    public static final int CARD_HEIGHT = 125;
 
+
+    Font bigFont = new Font("Monaco", Font.BOLD, 30);
+    Font smallFont = new Font("Monaco", Font.BOLD, 15);
 
     private String textToDisplay;
 
@@ -32,6 +39,8 @@ public class GameView extends JFrame {
 
         this.backgroundImage = new ImageIcon("Resources/Blackjack Background.png").getImage();
 
+        this.textToDisplay = "";
+
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Tic Tac Toe");
@@ -42,8 +51,13 @@ public class GameView extends JFrame {
 
     public void setTextToDisplay(String textToDisplay) {
         this.textToDisplay = textToDisplay;
+        repaint();
     }
 
+    public void setGame(Game g)
+    {
+        this.game = g;
+    }
 
 
 
@@ -60,9 +74,9 @@ public class GameView extends JFrame {
 
         g.setColor(lightBlue);
 
-        Font myFont = new Font("Monaco", Font.BOLD, 30);
 
-        g.setFont(myFont);
+
+        g.setFont(bigFont);
 
         // Draw dealer's points
         g.drawString(String.valueOf(game.getDealer().getPoints()),
@@ -73,6 +87,26 @@ public class GameView extends JFrame {
                 PLAYER_POINTS_X_OFFSET, PLAYER_POINTS_Y_OFFSET);
 
 
-        g.drawString(textToDisplay, );
+        g.setFont(smallFont);
+
+
+        for (int i = 0; i < game.getPlayer().getHand().size() - 1; i++)
+        {
+            g.drawImage(game.getPlayer().getHand().get(i).getCardPicture(),
+                    PLAYER_CARDS_X_OFFSET + ((i + 1) * CARD_WIDTH), PLAYER_CARDS_Y_OFFSET,
+                    CARD_WIDTH, CARD_HEIGHT,
+                    this);
+
+        }
+
+//        for (Card c : game.getPlayer().getHand())
+//        {
+//            g.drawImage(c.getCardPicture(),
+//                    PLAYER_CARDS_X_OFFSET, PLAYER_CARDS_Y_OFFSET,
+//                    CARD_WIDTH, CARD_HEIGHT,
+//                    this);
+//        }
+
+        g.drawString(textToDisplay, WINDOW_WIDTH / 2 - 100, WINDOW_HEIGHT / 2);
     }
 }
