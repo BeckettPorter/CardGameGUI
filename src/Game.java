@@ -158,6 +158,7 @@ public class Game {
             {
                 Game game = new Game(window);
                 game.playGame(false);
+                window.setShowDealerFirstCard(false);
                 return;
             }
             // Else if playAgainInput is no, just return and exit the program.
@@ -198,6 +199,8 @@ public class Game {
                     dealer.getPoints() + " points.");
             window.setTextToDisplay("You lost with " + player.getPoints() + " points! The dealer had " +
                     dealer.getPoints() + " points.");
+            // Show dealer's first card
+            window.setShowDealerFirstCard(true);
             restartGame();
         }
         // If the player didn't lose, checks if they have 21 and then gives them a blackjack and calls restartGame.
@@ -205,6 +208,8 @@ public class Game {
         {
             System.out.println("BlackJack with " + player.getPoints() + " points!");
             window.setTextToDisplay("BlackJack with " + player.getPoints() + " points!");
+            // Show dealer's first card
+            window.setShowDealerFirstCard(true);
             restartGame();
         }
         // Here is the check for if the player won, it checks if the comparePointValues is true, and if so, it will
@@ -216,6 +221,8 @@ public class Game {
                     dealer.getPoints() + " points.");
             window.setTextToDisplay("You won with " + player.getPoints() + " points! The dealer had " +
                     dealer.getPoints() + " points.");
+            // Show dealer's first card
+            window.setShowDealerFirstCard(true);
             restartGame();
         }
         // If comparePointValues is true and the player and dealer have the same point values, it shows that
@@ -224,6 +231,8 @@ public class Game {
         {
             System.out.println("Tie with " + player.getPoints() + " points!");
             window.setTextToDisplay("Tie with " + player.getPoints() + " points!");
+            // Show dealer's first card
+            window.setShowDealerFirstCard(true);
             restartGame();
         }
     }
