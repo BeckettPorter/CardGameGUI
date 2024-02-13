@@ -24,7 +24,7 @@ public class Game {
         window = new GameView(this);
     }
 
-    // Constructor where I pass in the window so it doesn't make a new window whenever I restart the game
+    // Constructor where I pass in the window, so it doesn't make a new window whenever I restart the game
     public Game(GameView window)
     {
         player = new Player("Player", new ArrayList<Card>());
@@ -33,6 +33,9 @@ public class Game {
         deck = new Deck(new String[]{"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"},
                 new String[]{"Hearts", "Clubs", "Diamonds", "Spades"},
                 new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10});
+
+        window.setShowDealerFirstCard(false);
+        window.setGameOver(false);
 
         // Hacky workaround to get the window and game to have correct references to each other once new game
         // object is created.
@@ -125,9 +128,11 @@ public class Game {
         {
             while(dealer.getPoints() < 21 && dealer.getPoints() < player.getPoints())
             {
-                System.out.println("Dealer gained " + dealer.addCard(deck.deal(dealer)).getPoint() +
+                Card cardToAdd = deck.deal(dealer);
+                System.out.println("Dealer gained " + cardToAdd.getPoint() +
                         " points for a total of " + dealer.getPoints() + " points");
-                window.setTextToDisplay("Dealer gained " + dealer.addCard(deck.deal(dealer)).getPoint() +
+
+                window.setTextToDisplay("Dealer gained " + cardToAdd.getPoint() +
                         " points for a total of " + dealer.getPoints() + " points");
 
             }
@@ -201,6 +206,7 @@ public class Game {
                     dealer.getPoints() + " points.");
             // Show dealer's first card
             window.setShowDealerFirstCard(true);
+            window.setGameOver(true);
             restartGame();
         }
         // If the player didn't lose, checks if they have 21 and then gives them a blackjack and calls restartGame.
@@ -210,6 +216,7 @@ public class Game {
             window.setTextToDisplay("BlackJack with " + player.getPoints() + " points!");
             // Show dealer's first card
             window.setShowDealerFirstCard(true);
+            window.setGameOver(true);
             restartGame();
         }
         // Here is the check for if the player won, it checks if the comparePointValues is true, and if so, it will
@@ -223,6 +230,7 @@ public class Game {
                     dealer.getPoints() + " points.");
             // Show dealer's first card
             window.setShowDealerFirstCard(true);
+            window.setGameOver(true);
             restartGame();
         }
         // If comparePointValues is true and the player and dealer have the same point values, it shows that
@@ -233,6 +241,7 @@ public class Game {
             window.setTextToDisplay("Tie with " + player.getPoints() + " points!");
             // Show dealer's first card
             window.setShowDealerFirstCard(true);
+            window.setGameOver(true);
             restartGame();
         }
     }

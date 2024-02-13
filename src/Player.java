@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Player {
@@ -58,10 +57,11 @@ public class Player {
 
 
     // addCard method, I modified it a bit to also return the card it added because it made some of my code in
-    // Game.java more clean (line 105).
+    // Game.java more clean.
     public Card addCard(Card cardToAdd)
     {
         hand.add(cardToAdd);
+        System.out.println(hand);
         return cardToAdd;
     }
 

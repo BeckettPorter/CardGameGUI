@@ -45,6 +45,10 @@ public class GameView extends JFrame {
 
 
 
+    private boolean gameOver;
+
+
+
     // Constructor for GameView that sets instance vars and also sets up the window and shows it
     public GameView (Game game)
     {
@@ -57,6 +61,8 @@ public class GameView extends JFrame {
         cardBackImage = new ImageIcon("resources/back.png").getImage();
 
         showDealerFirstCard = false;
+
+        gameOver = false;
 
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -80,6 +86,9 @@ public class GameView extends JFrame {
         this.showDealerFirstCard = showDealerFirstCard;
     }
 
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
+    }
 
 
     // Paint method that draws everything to the screen
@@ -98,9 +107,24 @@ public class GameView extends JFrame {
 
         g.setFont(bigFont);
 
-        // Draw dealer's points
-        g.drawString(String.valueOf(game.getDealer().getPoints()),
-                DEALER_POINTS_X_OFFSET, DEALER_POINTS_Y_OFFSET);
+
+        // I have to do this check so it doesn't throw error messages at me :/
+        if (!game.getDealer().getHand().isEmpty())
+        {
+            if (game.getDealer().getHand().size() <= 2 && !gameOver)
+            {
+                // Draw dealer's points if they have a hidden card
+                g.drawString(String.valueOf(game.getDealer().getSecondCard().getPoint()),
+                        DEALER_POINTS_X_OFFSET, DEALER_POINTS_Y_OFFSET);
+            }
+            else
+            {
+                // Draw dealer's points if they don't have a hidden card
+                g.drawString(String.valueOf(game.getDealer().getPoints()),
+                        DEALER_POINTS_X_OFFSET, DEALER_POINTS_Y_OFFSET);
+            }
+        }
+
 
         // Draw player's points
         g.drawString(String.valueOf(game.getPlayer().getPoints()),
@@ -126,7 +150,7 @@ public class GameView extends JFrame {
                     this);
         }
 
-        // Draws the dealer's cards and offsets them so they are always centered
+        // Draws the dealer's cards and offsets them, so they are always centered
         totalCardsWidth = game.getDealer().getHand().size() * CARD_WIDTH;
         totalGapsWidth = (game.getDealer().getHand().size() - 1) * CARD_GAP;
         totalFilledUpWidth = totalCardsWidth + totalGapsWidth;
