@@ -128,13 +128,12 @@ public class Game {
         {
             while(dealer.getPoints() < 21 && dealer.getPoints() < player.getPoints())
             {
-                Card cardToAdd = deck.deal(dealer);
+                Card cardToAdd = dealer.addCard(deck.deal(dealer));
                 System.out.println("Dealer gained " + cardToAdd.getPoint() +
                         " points for a total of " + dealer.getPoints() + " points");
 
                 window.setTextToDisplay("Dealer gained " + cardToAdd.getPoint() +
                         " points for a total of " + dealer.getPoints() + " points");
-
             }
             // Once the while loop is done, it determines the winner and comparePointValues is true because I want to
             // check if the player or dealer has more points.

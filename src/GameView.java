@@ -66,7 +66,7 @@ public class GameView extends JFrame {
 
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setTitle("Tic Tac Toe");
+        this.setTitle("Blackjack");
         this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         this.setVisible(true);
     }
@@ -175,7 +175,6 @@ public class GameView extends JFrame {
                         this);
             }
         }
-
 
         // Draw the string text in the middle of the screen that displays important info
         g.drawString(textToDisplay, WINDOW_WIDTH / 2 + MIDDLE_TEXT_X_OFFSET, WINDOW_HEIGHT / 2 + MIDDLE_TEXT_Y_OFFSET);
